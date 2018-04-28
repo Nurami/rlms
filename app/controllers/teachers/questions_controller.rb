@@ -34,21 +34,16 @@ module Teachers
     def save
       params.permit(:topic_id, questions: [:title, {answers: [:text, :correct] } ])
       quests = Array.new
+
       for q in params[:questions] do
-        quest = Question.new(title: q[:title])
-        quest.topic = topic
-        if quest.valid?
-          for a in q[:answers] do
-            if a[:text]
-              quest.answer_variants << AnswerVariant.new(text: a[:text], correct: a[:correct])
-            end
-          end
-          quests << quest
+      quest = Question.new(title: q[:title])
+      quest.topic = topic
+        for a in q[:answers] do
+          quest.answer_variants << AnswerVariant.new(text: a[:text], correct: a[:correct])
         end
+        quests << quest
       end
-      Question.transaction do
-        quests.each(&:save)
-      end
+      quests.each(&:save)
       redirect_to  teachers_topic_path(topic) 
     end 
 
