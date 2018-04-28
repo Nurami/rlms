@@ -1,0 +1,13 @@
+=form_tag teachers_save_questions_path do
+  =hidden_field_tag('topic_id', topic.id)
+  - @questions.each do |q|
+    hr 
+    .row
+      .col-sm-4
+        =text_area_tag('[questions][][title]', q.title, class: 'form-control string required')
+      - for a in q.answer_variants do
+        .col-sm-2
+          =text_area_tag('[questions][][answers][][text]', a.text, class: 'form-control string required')
+          =hidden_field_tag('[questions][][answers][][correct]', a.correct)
+  .clearfix
+    .text-center =submit_tag("Save", class: "btn btn-default")
