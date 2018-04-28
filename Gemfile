@@ -15,6 +15,7 @@ gem 'interactor', '~> 3.0'
 gem 'pg', '~> 0.18'
 gem 'rails_admin', '~> 1.2'
 gem 'webpacker'
+gem "roo", "~> 2.7.0"
 
 # services
 gem 'rollbar'

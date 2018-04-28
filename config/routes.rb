@@ -27,6 +27,7 @@ Rails.application.routes.draw do
         resources :materials, shallow: true, only: %i(create destroy)
       end
     end
+    post 'save', to: 'questions#save', as: :save_questions
   end
 
   namespace :learners do
