@@ -5,7 +5,7 @@
     .row
       .col-sm-4
         =text_area_tag('[questions][][title]', q.title, class: 'form-control string required')
-      - for a in q.answer_variants do
+      - q.answer_variants.each do |a|
         .col-sm-2
           =text_area_tag('[questions][][answers][][text]', a.text, class: 'form-control string required')
           =hidden_field_tag('[questions][][answers][][correct]', a.correct)

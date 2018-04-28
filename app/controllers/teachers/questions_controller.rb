@@ -35,10 +35,10 @@ module Teachers
       params.permit(:topic_id, questions: [:title, {answers: [:text, :correct] } ])
       quests = Array.new
 
-      for q in params[:questions] do
-      quest = Question.new(title: q[:title])
-      quest.topic = topic
-        for a in q[:answers] do
+      params[:questions].each do |q|
+        quest = Question.new(title: q[:title])
+        quest.topic = topic
+        q[:answers].each do |a|
           quest.answer_variants << AnswerVariant.new(text: a[:text], correct: a[:correct])
         end
         quests << quest

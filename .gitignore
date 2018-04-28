@@ -9,6 +9,8 @@
 
 config/database.yml
 .env
+.log
+
 
 /public/packs
 /public/packs-test
@@ -16,3 +18,4 @@ config/database.yml
 
 /node_modules
 yarn-error.log
+package.json
