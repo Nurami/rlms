@@ -5,13 +5,14 @@ module Teachers
     expose :question
     expose :topic
 
+    FILE_TYPES = %w(application/vnd.openxmlformats-officedocument.spreadsheetml.sheet application/vnd.oasis.opendocument.spreadsheet text/csv)
+
     def create  
       uploaded = params.require(:question).permit(:attachment)
-      if uploaded.has_key?(:attachment)
-        @questions = Array.new
-        uploaded_io = uploaded[:attachment]
-        if uploaded_io.content_type.in?(%w(application/vnd.openxmlformats-officedocument.spreadsheetml.sheet application/vnd.oasis.opendocument.spreadsheet text/csv))
-          xls = Roo::Spreadsheet.open(uploaded_io)
+      if uploaded[:attachment].instance_of? ActionDispatch::Http::UploadedFile
+        if uploaded[:attachment].content_type.in?(FILE_TYPES)
+          xls = Roo::Spreadsheet.open(uploaded[:attachment])
+          @questions = Array.new
           xls.sheet(0).each do |row|
             if row[0].in?(['questions', nil])
               next
@@ -29,7 +30,11 @@ module Teachers
           end
           return
         end
-        redirect_to  teachers_topic_path(topic), :alert => 'wrong format'
+        redirect_to  teachers_topic_path(topic), :alert => 'Wrong Format'
+        return
+      else
+        redirect_to  teachers_topic_path(topic), :alert => 'No File'
+        return  
       end
       question.topic = topic
       question.save

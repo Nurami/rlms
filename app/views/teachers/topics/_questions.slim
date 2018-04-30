@@ -8,12 +8,13 @@
     .panel-heading Добавить вопрос:
     .panel-body
       = simple_form_for [:teachers, topic, topic.questions.new], remote: true do |f|
-        = f.input :title
+        = f.input :title 
         .text-center = f.submit "Добавить вопрос", class: "btn btn-default"
-
+      hr
       = simple_form_for [:teachers, topic, topic.questions.new] do |f|
+        = f.input :title, as: :hidden
         .row
           .col-sm-6
-            = f.input :attachment, as: :file
+            = f.input :attachment, label:'(xlsx, xlsm, ods, csv)', as: :file
         .clearfix
           .text-center = f.submit "Загрузить вопросы", class: "btn btn-default"
