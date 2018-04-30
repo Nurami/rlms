@@ -8,20 +8,28 @@ module Teachers
     def create  
       uploaded = params.require(:question).permit(:attachment)
       if uploaded.has_key?(:attachment)
-        uploaded_io = uploaded[:attachment]
-        xls = Roo::Spreadsheet.open(uploaded_io)
         @questions = Array.new
-        xls.each_row_streaming(offset: 1) do |row|
-          q = Question.new(title: row[0])
-          q.answer_variants << AnswerVariant.new(text: row[1], correct: true)
-          q.topic = topic
-          row.slice!(0,2)
-          row.each do |answ|
-            q.answer_variants << AnswerVariant.new(:text => answ)
-          end 
-          @questions << q 
+        uploaded_io = uploaded[:attachment]
+        if uploaded_io.content_type.in?(%w(application/vnd.openxmlformats-officedocument.spreadsheetml.sheet application/vnd.oasis.opendocument.spreadsheet text/csv))
+          xls = Roo::Spreadsheet.open(uploaded_io)
+          xls.sheet(0).each do |row|
+            if row[0].in?(['questions', nil])
+              next
+            end
+            q = Question.new(title: row[0])
+            q.answer_variants << AnswerVariant.new(text: row[1], correct: true)
+            q.topic = topic
+            row.slice!(0,2)
+            row.each do |answ|
+              if answ
+                q.answer_variants << AnswerVariant.new(:text => answ)
+              end
+            end 
+            @questions << q 
+          end
+          return
         end
-        return
+        redirect_to  teachers_topic_path(topic), :alert => 'wrong format'
       end
       question.topic = topic
       question.save
