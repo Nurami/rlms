@@ -12,16 +12,16 @@ class SortableTopicsComponent extends React.Component {
       topics: arrayMove(this.state.topics, oldIndex, newIndex),
     });
 
-    this.state.topics.forEach((topic, order_index) => {
-      $.ajax({
-        url: "/api/v1/topics/" + topic.id,
-        method: "PUT",
-        data: {
-          topic: {
-            order_index: order_index
-          }
+    var topicId = this.state.topics[newIndex].id
+
+    $.ajax({
+      url: "/api/v1/topics/" + topicId,
+      method: "PUT",
+      data: {
+        topic: {
+          order_index: newIndex
         }
-      });
+      }
     });
   };
 
@@ -63,4 +63,3 @@ const CourseTopic = SortableElement(({topic}) => {
     </div>
   )
 })
-

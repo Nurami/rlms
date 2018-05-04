@@ -3,7 +3,7 @@ module Api
     class TopicsController < Api::V1::BaseController
       respond_to :json
 
-      TOPIC_PARAMS = %i[title description order_index]
+      TOPIC_PARAMS = %i[title description order_index].freeze
 
       expose :topic
       expose :course
@@ -13,6 +13,8 @@ module Api
       end
 
       def update
+        Teachers::Topics::UpdateOrderIndexes.call(topic: topic, new_index: topic_params["order_index"].to_i)
+
         topic.update_attributes(topic_params)
         topic.save
 
