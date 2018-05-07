@@ -1,4 +1,11 @@
-.well
-  h4 = link_to course.title, learners_course_path(course)
+.course-progress
+  .title
+    h4 = link_to course.title, learners_course_path(course)
+    
+  .progresstitle
+    text ПРОГРЕСС КУРСА
 
+  .progressbar
+    .progress style="height: 15px;"
+      .progress-bar.progress-bar-success(role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100") 
 
