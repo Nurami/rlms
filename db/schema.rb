@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171107232125) do
+ActiveRecord::Schema.define(version: 20180518182233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,17 @@ ActiveRecord::Schema.define(version: 20171107232125) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
+  end
+
+  create_table "learner_answers", force: :cascade do |t|
+    t.bigint "question_id"
+    t.bigint "answer_variant_id"
+    t.bigint "learner_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["answer_variant_id"], name: "index_learner_answers_on_answer_variant_id"
+    t.index ["learner_id"], name: "index_learner_answers_on_learner_id"
+    t.index ["question_id"], name: "index_learner_answers_on_question_id"
   end
 
   create_table "learners", force: :cascade do |t|
@@ -154,4 +165,7 @@ ActiveRecord::Schema.define(version: 20171107232125) do
     t.boolean "published", default: false
   end
 
+  add_foreign_key "learner_answers", "answer_variants"
+  add_foreign_key "learner_answers", "learners"
+  add_foreign_key "learner_answers", "questions"
 end

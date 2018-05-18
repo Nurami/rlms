@@ -12,6 +12,7 @@ class Learner < ApplicationRecord
 
   has_many :course_participations
   has_many :courses, through: :course_participations
+  has_many :learner_answers
 
   validates :first_name, :last_name, presence: true
 
