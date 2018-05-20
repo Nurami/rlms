@@ -16,6 +16,7 @@ gem 'pg', '~> 0.18'
 gem 'rails_admin', '~> 1.2'
 gem 'webpacker'
 gem 'draper'
+gem 'decent_decoration'
 
 # services
 gem 'rollbar'

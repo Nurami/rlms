@@ -22,5 +22,15 @@
     margin-bottom: 10px;
     text-align: center;
   }
+  .progress {
+    position: relative;
+  }
+
+  .progress span {
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: black;
+  }
 }
 

@@ -89,6 +89,8 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
     database_cleaner (1.6.1)
+    decent_decoration (0.1.0)
+      decent_exposure (~> 3.0)
     decent_exposure (3.0.2)
       activesupport (>= 4.0)
     devise (4.3.0)
@@ -349,6 +351,7 @@ DEPENDENCIES
   capybara
   carrierwave (~> 1.0)
   database_cleaner
+  decent_decoration
   decent_exposure
   devise
   dotenv-rails
