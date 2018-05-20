@@ -38,6 +38,14 @@ Rails.application.routes.draw do
     resources :topics, only: :show
   end
 
+  
+  # resources :topics do
+  #   resources :learners do
+  #     get "results"
+  #   end
+  # end
+  get "/topics/:id/learners/:id/results", to: "topics/learners/results#index"
+
   authenticated :administrator do
     root to: "rails_admin/main#dashboard", as: :administrator_root
   end

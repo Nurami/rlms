@@ -1,0 +1,9 @@
+- topic.questions.each do |question|
+  h2 = question.title
+  - learner_answer = question.learner_answers.where(learner: current_learner).first
+  p Ученик дал ответ:
+  p = learner_answer.answer_variant.text
+  - if learner_answer.correct
+    p ПРАВИЛЬНО!
+  - else
+    p НЕПРАВИЛЬНО!
