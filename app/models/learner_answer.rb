@@ -3,5 +3,5 @@ class LearnerAnswer < ApplicationRecord
   belongs_to :answer_variant
   belongs_to :learner
 
-  delegate :correct, to: :answer_variant
+  delegate :correct, :text, to: :answer_variant
 end

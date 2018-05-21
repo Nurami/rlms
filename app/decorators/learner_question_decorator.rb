@@ -7,7 +7,15 @@ class LearnerQuestionDecorator < ApplicationDecorator
   end
 
   def answer_correct?
-    @learner.learner_answers.where(question: @question).first.correct
+    learner_answer.correct
+  end
+
+  def answer_text
+    learner_answer.text
+  end
+
+  def learner_answer
+    @learner.learner_answers.where(question: @question).first
   end
 
 end

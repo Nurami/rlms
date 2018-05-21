@@ -1,33 +1,25 @@
 class LearnerCourseDecorator < ApplicationDecorator
-  #decorates :course
   delegate_all
-  # decorates Learner::Course
-
-  # def initialize (course)
-  #   @course = course
-  # end
+  delegate :topics, to: :object
 
   def result
-    topics = object.topics
-    arr = []
-    topics.each do |topic|
-      mass = []
-      topic.questions.each do |question|
-        mass.push(question.learner_answers.where(learner: h.current_learner).first.correct)
+    arr = topics.map do |topic|
+      mass = topic.questions.map do |question|
+        question.learner_answers.where(learner: h.current_learner).first.correct
       end
-      if mass.size != 0
-        if (mass.count(true) / mass.size.to_f) >= 0.75
-          arr.push(true)
-        else
-          arr.push(false)
-        end
-      end
+      topic_progress(mass) if mass.any?
     end
-    if arr.size != 0
-      ((arr.count(true) / arr.size.to_f) * 100).to_i
-    else
-      0
-    end
+    percent(arr)
+  end
+
+
+  def percent(arr)
+    return 0 if arr.empty?
+    ((arr.count(true) / arr.size.to_f) * 100).to_i
+  end
+
+  def topic_progress(mass)
+    (mass.count(true) / mass.size.to_f) >= 0.75
   end
 
 end
